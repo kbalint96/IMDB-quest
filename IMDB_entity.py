@@ -1,4 +1,5 @@
 import json
+import logging
 
 class IMDBEntity:
 
@@ -25,17 +26,32 @@ class IMDBEntity:
         self.parse_rating()
         self.parse_num_of_ratings()
         self.parse_num_of_oscars()
-        self.parse_title()
 
     def parse_rating(self):
-        self.rating = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['aggregateRating']
+        try:
+            self.rating = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['aggregateRating']
+        except TypeError:
+            logging.warning("Could not extract rating from movie data, value is set to 0!")
+            self.rating = 0
 
     def parse_num_of_ratings(self):
-        self.num_of_ratings = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['voteCount']
+        try:
+            self.num_of_ratings = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['voteCount']
+        except TypeError:
+            logging.warning("Could not extract num_of_ratings from movie data, value is set to 0!")
+            self.num_of_ratings = 0
 
     def parse_num_of_oscars(self):
-        self.num_of_oscars = self.data['props']['pageProps']['mainColumnData']['prestigiousAwardSummary']['wins']
+        try:
+            self.num_of_oscars = self.data['props']['pageProps']['mainColumnData']['prestigiousAwardSummary']['wins']
+        except TypeError:
+            logging.warning("Could not extract num_of_oscars from movie data, value is set to 0!")
+            self.num_of_oscars = 0
 
     def parse_title(self):
-        self.title = self.data['props']['pageProps']['aboveTheFoldData']['titleText']['text']
+        try:
+            self.title = self.data['props']['pageProps']['aboveTheFoldData']['titleText']['text']
+        except TypeError:
+            logging.warning("Could not extract title from movie data, value is set to ""!")
+            self.title = ""
 
