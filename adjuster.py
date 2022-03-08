@@ -9,13 +9,13 @@ class Adjuster:
 
     def adjust(self):
         for imdb_entity in self.imdb_entities:
-            imdb_entity.adjustRating(self.oscar_calculator(imdb_entity))
-            imdb_entity.adjustRating(self.review_penalizer(imdb_entity))
+            imdb_entity.adjust_rating(self.oscar_calculator(imdb_entity))
+            imdb_entity.adjust_rating(self.review_penalizer(imdb_entity))
 
-        self.sort_by_rating()
+        self.sort_by_adjusted_rating()
 
-    def sort_by_rating(self):
-        self.imdb_entities.sort(key=lambda x: x.rating, reverse = True)
+    def sort_by_adjusted_rating(self):
+        self.imdb_entities.sort(key=lambda x: x.adjusted_rating, reverse = True)
 
     def oscar_calculator(self, imdb_entity):
         oscars = imdb_entity.num_of_oscars

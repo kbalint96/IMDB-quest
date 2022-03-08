@@ -4,15 +4,16 @@ import utils
 
 class IMDBEntity:
 
-    order = None
+    id = None
     rating = None
+    adjusted_rating = None
     num_of_ratings = None
     num_of_oscars = None
     title = None
 
 
-    def __init__(self, order, data):
-        self.order = order
+    def __init__(self, id, data):
+        self.id = id
 
         # here should come a function which parses the data and creates a dict from JSON
         self.data = self.data_to_dict(data)
@@ -31,34 +32,35 @@ class IMDBEntity:
 
     def parse_rating(self):
         try:
-            self.rating = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['aggregateRating']
+            self.rating = self.adjusted_rating = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['aggregateRating']
         except TypeError:
-            logging.warning("Could not extract rating from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
-            self.rating = utils.DEFAULT_DATA_VALUE_INT
+            logging.warning("Could not extract rating from movie #%d data, value is set to %s!", self.id, utils.DEFAULT_DATA_VALUE_INT)
+            self.rating = self.adjusted_rating = utils.DEFAULT_DATA_VALUE_INT
+
 
     def parse_num_of_ratings(self):
         try:
             self.num_of_ratings = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['voteCount']
         except TypeError:
-            logging.warning("Could not extract num_of_ratings from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
+            logging.warning("Could not extract num_of_ratings from movie #%d data, value is set to %s!", self.id, utils.DEFAULT_DATA_VALUE_INT)
             self.num_of_ratings = utils.DEFAULT_DATA_VALUE_INT
 
     def parse_num_of_oscars(self):
         try:
             self.num_of_oscars = self.data['props']['pageProps']['mainColumnData']['prestigiousAwardSummary']['wins']
         except TypeError:
-            logging.warning("Could not extract num_of_oscars from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
+            logging.warning("Could not extract num_of_oscars from movie #%d data, value is set to %s!", self.id, utils.DEFAULT_DATA_VALUE_INT)
             self.num_of_oscars = utils.DEFAULT_DATA_VALUE_INT
 
     def parse_title(self):
         try:
             self.title = self.data['props']['pageProps']['aboveTheFoldData']['titleText']['text']
         except TypeError:
-            logging.warning("Could not extract title from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_STR)
+            logging.warning("Could not extract title from movie #%d data, value is set to %s!", self.id, utils.DEFAULT_DATA_VALUE_STR)
             self.title = utils.DEFAULT_DATA_VALUE_STR
 
-    def adjustRating(self, adjustment):
-        self.rating = round(self.rating + adjustment, 2)
+    def adjust_rating(self, adjustment):
+        self.adjusted_rating = round(self.adjusted_rating + adjustment, 2)
 
     def __str__(self):
-        return "{}\t{}\t{}\t{}\t{}".format(self.order, self.rating, self.num_of_ratings, self.num_of_oscars, self.title)
+        return "{}\t{}\t{}\t{}\t{}\t{}".format(self.id, self.rating, self.adjusted_rating, self.num_of_ratings, self.num_of_oscars, self.title)
