@@ -1,4 +1,5 @@
 from IMDB_scraper import IMDBScraper
+from IMDB_entity import IMDBEntity
 import logging
 
 """
@@ -15,6 +16,8 @@ logging.getLogger().setLevel(logging.INFO)
 scraper = IMDBScraper("https://www.imdb.com/chart/top")
 scraped_data = scraper.get_data()
 
-
+imdb_entities = []
+for i in range(len(scraped_data)):
+    imdb_entities.append(IMDBEntity(i, scraped_data[i]))
 
 
