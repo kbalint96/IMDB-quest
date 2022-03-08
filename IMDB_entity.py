@@ -57,3 +57,8 @@ class IMDBEntity:
             logging.warning("Could not extract title from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_STR)
             self.title = utils.DEFAULT_DATA_VALUE_STR
 
+    def adjustRating(self, adjustment):
+        self.rating = round(self.rating + adjustment, 2)
+
+    def __str__(self):
+        return "{}\t{}\t{}\t{}\t{}".format(self.order, self.rating, self.num_of_ratings, self.num_of_oscars, self.title)
