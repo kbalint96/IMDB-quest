@@ -1,5 +1,6 @@
 import json
 import logging
+import utils
 
 class IMDBEntity:
 
@@ -26,32 +27,33 @@ class IMDBEntity:
         self.parse_rating()
         self.parse_num_of_ratings()
         self.parse_num_of_oscars()
+        self.parse_title()
 
     def parse_rating(self):
         try:
             self.rating = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['aggregateRating']
         except TypeError:
-            logging.warning("Could not extract rating from movie data, value is set to 0!")
-            self.rating = 0
+            logging.warning("Could not extract rating from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
+            self.rating = utils.DEFAULT_DATA_VALUE_INT
 
     def parse_num_of_ratings(self):
         try:
             self.num_of_ratings = self.data['props']['pageProps']['aboveTheFoldData']['ratingsSummary']['voteCount']
         except TypeError:
-            logging.warning("Could not extract num_of_ratings from movie data, value is set to 0!")
-            self.num_of_ratings = 0
+            logging.warning("Could not extract num_of_ratings from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
+            self.num_of_ratings = utils.DEFAULT_DATA_VALUE_INT
 
     def parse_num_of_oscars(self):
         try:
             self.num_of_oscars = self.data['props']['pageProps']['mainColumnData']['prestigiousAwardSummary']['wins']
         except TypeError:
-            logging.warning("Could not extract num_of_oscars from movie data, value is set to 0!")
-            self.num_of_oscars = 0
+            logging.warning("Could not extract num_of_oscars from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_INT)
+            self.num_of_oscars = utils.DEFAULT_DATA_VALUE_INT
 
     def parse_title(self):
         try:
             self.title = self.data['props']['pageProps']['aboveTheFoldData']['titleText']['text']
         except TypeError:
-            logging.warning("Could not extract title from movie data, value is set to ""!")
-            self.title = ""
+            logging.warning("Could not extract title from movie #%d data, value is set to %s!", self.order, utils.DEFAULT_DATA_VALUE_STR)
+            self.title = utils.DEFAULT_DATA_VALUE_STR
 

@@ -18,6 +18,6 @@ scraped_data = scraper.get_data()
 
 imdb_entities = []
 for i in range(len(scraped_data)):
-    imdb_entities.append(IMDBEntity(i, scraped_data[i]))
+    imdb_entities.append(IMDBEntity(i + 1, scraped_data[i]))
 
 
