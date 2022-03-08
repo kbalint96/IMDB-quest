@@ -1,3 +1,6 @@
+from IMDB_scraper import IMDBScraper
+import logging
+
 """
 The IMDB quest can be used to scrape, parse, adjust and reorder data from IMDB which can be written into CSV.
 
@@ -6,4 +9,12 @@ The IMDB quest can be used to scrape, parse, adjust and reorder data from IMDB w
                      Also responsible to build the entity from given raw data
 @TODO: calculator - A class which is responsible for data manipulation and adjustments
 """
+
+logging.getLogger().setLevel(logging.INFO)
+
+scraper = IMDBScraper("https://www.imdb.com/chart/top")
+scraped_data = scraper.get_data()
+
+
+
 
