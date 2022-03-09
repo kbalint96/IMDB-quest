@@ -11,7 +11,7 @@ Main modules:
 The utils contains CONSTANTs and class-independent functions, such as logging, exporting and converting
 
 ## IMDBScraper
-A class which is responsible for extract movie data as JSON from a given IMDB chart URL
+A class which is responsible for extracting movie data as JSON from a given IMDB chart URL.
 
 The constructor of the class needs an IMDB chart URL. By calling the constructor and creating the object, all functions
 will automatically be called.
@@ -72,4 +72,4 @@ utils.data_to_csv(imdb_entities)
 
 ### Required libraries
 - requests
-- beutifulsoups4
+- beautifulsoup4
