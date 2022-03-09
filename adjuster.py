@@ -1,3 +1,5 @@
+import logging
+
 class Adjuster:
 
     def __init__(self, imdb_entities):
@@ -25,11 +27,17 @@ class Adjuster:
         Adjusts ratings by review_penalizer return value
         Sorts the list based on the new ratings
         """
+
+        logging.info("Adjusting movie ratings ...")
+
         for imdb_entity in self.imdb_entities:
-            imdb_entity.adjust_rating(self.oscar_calculator(imdb_entity))
-            imdb_entity.adjust_rating(self.review_penalizer(imdb_entity))
+            imdb_entity.adjust_rating(self.oscar_calculator(imdb_entity.num_of_oscars))
+            imdb_entity.adjust_rating(self.review_penalizer(imdb_entity.num_of_ratings))
 
         self.sort_by_adjusted_rating()
+
+        logging.info("Movie ratings successfully adjusted!")
+
 
     def sort_by_adjusted_rating(self):
         """
@@ -37,14 +45,13 @@ class Adjuster:
         """
         self.imdb_entities.sort(key=lambda x: x.adjusted_rating, reverse = True)
 
-    def oscar_calculator(self, imdb_entity):
+    def oscar_calculator(self, oscars):
         """
         Function to calculate the bonus points for ratings based on num_of_oscars
 
         :param imdb_entity: IMDBEntity objects to be analyzed
         :return: adjustment as float
         """
-        oscars = imdb_entity.num_of_oscars
 
         if 1 <= oscars <= 2:
             return 0.3
@@ -57,7 +64,7 @@ class Adjuster:
         else:
             return 0
 
-    def review_penalizer(self, imdb_entity):
+    def review_penalizer(self, num_of_ratings):
         """
         Function to calculate the bonus points for ratings based on number of ratings
 
@@ -65,4 +72,4 @@ class Adjuster:
         :return: adjustment as float
         """
         max_num_of_ratings = self.get_max_num_of_ratings()
-        return (max_num_of_ratings - imdb_entity.num_of_ratings) // 100000 * (-0.1)
+        return (max_num_of_ratings - num_of_ratings) // 100000 * (-0.1)

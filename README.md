@@ -25,7 +25,7 @@ scraped_data = scraper.get_data()
 ```
 
 ## IMDBEntity
-A class which stores movie data (order, original rating, adjusted rating, number of ratings, number or oscars and title as an object
+A class which stores movie data (order, original rating, adjusted rating, number of ratings, number or oscars and title) as an object
 The build_imdb_entities function of utils returns a list of IMDBEntity object converted from the scraped_data
 ```
 imdb_entities = utils.build_imdb_entities(scraped_data)
@@ -49,7 +49,7 @@ utils.data_to_json(imdb_entities)
 utils.data_to_csv(imdb_entities)
 ```
 
-##Main
+## Main
 By the end, the main should look like
 ```
 from IMDB_scraper import IMDBScraper
@@ -69,3 +69,7 @@ adjuster.adjust()
 utils.data_to_json(imdb_entities)
 utils.data_to_csv(imdb_entities)
 ```
+
+### Required libraries
+- requests
+- beutifulsoups4

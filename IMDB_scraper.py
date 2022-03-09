@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import utils
 import logging
 import requests
+import validators
 
 class IMDBScraper:
 
@@ -14,9 +15,20 @@ class IMDBScraper:
 
         :param url: the chart URL to be scraped
         """
+        self.validate_url(url)
         self.movie_urls = self.gen_urls_from_chart_site(url)
         self.movie_data = self.gen_movie_data()
 
+    def validate_url(self, url):
+        """
+        Function to validate URL
+
+        :param url: URL to be validated
+        :return: Exits with 12 if URL is not valid
+        """
+        if not validators.url(url):
+            logging.error("URL is not valid!")
+            exit(12)
 
     def get_data(self):
         """

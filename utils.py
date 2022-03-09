@@ -29,7 +29,7 @@ def init_logging():
 
 def transform_url(url):
     """
-    Function to extract text from any URL
+    Function to extract text (HTML) from any URL
     :param url: URL as object
     :return: URL as str
     """
@@ -43,7 +43,7 @@ def build_imdb_entities(data):
     :return: List of IMDBEntity objects
     """
 
-    logging.info("Setting up IMDBEntities out of movie JSON data ...")
+    logging.info("Creating IMDBEntities out of movie JSON data ...")
     imdb_entities = []
     for i in range(len(data)):
         try:
