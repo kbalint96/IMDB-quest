@@ -58,7 +58,7 @@ import utils
 
 utils.init_logging()
 
-scraper = IMDBScraper("https://www.imdb.com/chart/boxoffice")
+scraper = IMDBScraper("https://www.imdb.com/chart/top")
 scraped_data = scraper.get_data()
 
 imdb_entities = utils.build_imdb_entities(scraped_data)
