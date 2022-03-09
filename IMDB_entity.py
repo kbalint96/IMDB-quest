@@ -53,6 +53,7 @@ class IMDBEntity:
     def parse_title(self, data):
         try:
             self.title = data['props']['pageProps']['aboveTheFoldData']['titleText']['text']
+            self.title.encode('utf8')
         except TypeError:
             logging.warning("Could not extract title from movie #%d data, value is set to %s!", self.id, utils.DEFAULT_DATA_VALUE_STR)
             self.title = utils.DEFAULT_DATA_VALUE_STR
